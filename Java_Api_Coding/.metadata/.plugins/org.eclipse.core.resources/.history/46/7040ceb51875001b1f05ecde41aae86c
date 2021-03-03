@@ -1,0 +1,12 @@
+/**
+ * 
+ */
+package com.gateway.traineeproject.service;
+
+/**
+ * @author Hiren Khatri
+ *
+ */
+public class ImageStorageService {
+
+}

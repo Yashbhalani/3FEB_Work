@@ -1,0 +1,368 @@
+package com.gateway.traineeproject.model;
+
+
+import java.math.BigInteger;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.Transient;
+
+import org.springframework.web.multipart.MultipartFile;
+
+/**
+ * @author Hiren Khatri
+ *
+ */
+@Entity
+public class VehicleMaster
+{	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long id;
+	
+	@Column(name = "VINNum")
+	private String vINNum;
+	
+	@Column(name="LicencePlate")
+	private String licencePlate;
+	
+	@Column(name="AverageUsage")
+	private String averageUsage;
+	
+	@Column(name="Kilometers")
+	private BigInteger kilometers;
+	
+	@Column(name="SeatingCapicity")
+	private int seatingCapicity;
+	
+	@Column(name="Engine")
+	private String engine;
+	
+	@Column(name="BodyType")
+	private String bodyType;
+	
+	@Column(name="FuelType")
+	private String fuelType;
+	
+	@Column(name="NumOfAirbags")
+	public BigInteger numOfAirbags;
+	
+	@Column(name="NumOfDoors")
+	private int numOfDoors;
+	
+	@Column(name="VehicleConfiguration")
+	private String vehicleConfiguration;
+	
+	@Column(name="Wheelbase")
+	private String wheelbase;
+	
+	@Column(name="Color")
+	private String color;
+	
+	@Column(name="FuelCapacity")
+	private BigInteger fuelCapacity;
+	
+	@Column(name="CargoVolume")
+	private BigInteger cargoVolume;
+	
+	@Column(name="SalesPrice")
+	private double salesPrice;
+
+	@ManyToOne
+	@JoinColumn(name = "ModelId",referencedColumnName = "id")
+	private ModelMaster modelMaster;
+	
+	@Transient
+	private MultipartFile[] vehicleImages;
+	
+	@Transient
+	private String[] vehicleImagesPath;
+
+	/**
+	 * @return the id
+	 */
+	public long getId() {
+		return id;
+	}
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	/**
+	 * @return the vINNum
+	 */
+	public String getvINNum() {
+		return vINNum;
+	}
+
+	/**
+	 * @param vINNum the vINNum to set
+	 */
+	public void setvINNum(String vINNum) {
+		this.vINNum = vINNum;
+	}
+
+	/**
+	 * @return the licencePlate
+	 */
+	public String getLicencePlate() {
+		return licencePlate;
+	}
+
+	/**
+	 * @param licencePlate the licencePlate to set
+	 */
+	public void setLicencePlate(String licencePlate) {
+		this.licencePlate = licencePlate;
+	}
+
+	/**
+	 * @return the averageUsage
+	 */
+	public String getAverageUsage() {
+		return averageUsage;
+	}
+
+	/**
+	 * @param averageUsage the averageUsage to set
+	 */
+	public void setAverageUsage(String averageUsage) {
+		this.averageUsage = averageUsage;
+	}
+
+	/**
+	 * @return the kilometers
+	 */
+	public BigInteger getKilometers() {
+		return kilometers;
+	}
+
+	/**
+	 * @param kilometers the kilometers to set
+	 */
+	public void setKilometers(BigInteger kilometers) {
+		this.kilometers = kilometers;
+	}
+
+	/**
+	 * @return the seatingCapicity
+	 */
+	public int getSeatingCapicity() {
+		return seatingCapicity;
+	}
+
+	/**
+	 * @param seatingCapicity the seatingCapicity to set
+	 */
+	public void setSeatingCapicity(int seatingCapicity) {
+		this.seatingCapicity = seatingCapicity;
+	}
+
+	/**
+	 * @return the engine
+	 */
+	public String getEngine() {
+		return engine;
+	}
+
+	/**
+	 * @param engine the engine to set
+	 */
+	public void setEngine(String engine) {
+		this.engine = engine;
+	}
+
+	/**
+	 * @return the bodyType
+	 */
+	public String getBodyType() {
+		return bodyType;
+	}
+
+	/**
+	 * @param bodyType the bodyType to set
+	 */
+	public void setBodyType(String bodyType) {
+		this.bodyType = bodyType;
+	}
+
+	/**
+	 * @return the fuelType
+	 */
+	public String getFuelType() {
+		return fuelType;
+	}
+
+	/**
+	 * @param fuelType the fuelType to set
+	 */
+	public void setFuelType(String fuelType) {
+		this.fuelType = fuelType;
+	}
+
+	/**
+	 * @return the numOfAirbags
+	 */
+	public BigInteger getNumOfAirbags() {
+		return numOfAirbags;
+	}
+
+	/**
+	 * @param numOfAirbags the numOfAirbags to set
+	 */
+	public void setNumOfAirbags(BigInteger numOfAirbags) {
+		this.numOfAirbags = numOfAirbags;
+	}
+
+	/**
+	 * @return the numOfDoors
+	 */
+	public int getNumOfDoors() {
+		return numOfDoors;
+	}
+
+	/**
+	 * @param numOfDoors the numOfDoors to set
+	 */
+	public void setNumOfDoors(int numOfDoors) {
+		this.numOfDoors = numOfDoors;
+	}
+
+	/**
+	 * @return the vehicleConfiguration
+	 */
+	public String getVehicleConfiguration() {
+		return vehicleConfiguration;
+	}
+
+	/**
+	 * @param vehicleConfiguration the vehicleConfiguration to set
+	 */
+	public void setVehicleConfiguration(String vehicleConfiguration) {
+		this.vehicleConfiguration = vehicleConfiguration;
+	}
+
+	/**
+	 * @return the wheelbase
+	 */
+	public String getWheelbase() {
+		return wheelbase;
+	}
+
+	/**
+	 * @param wheelbase the wheelbase to set
+	 */
+	public void setWheelbase(String wheelbase) {
+		this.wheelbase = wheelbase;
+	}
+
+	/**
+	 * @return the color
+	 */
+	public String getColor() {
+		return color;
+	}
+
+	/**
+	 * @param color the color to set
+	 */
+	public void setColor(String color) {
+		this.color = color;
+	}
+
+	/**
+	 * @return the fuelCapacity
+	 */
+	public BigInteger getFuelCapacity() {
+		return fuelCapacity;
+	}
+
+	/**
+	 * @param fuelCapacity the fuelCapacity to set
+	 */
+	public void setFuelCapacity(BigInteger fuelCapacity) {
+		this.fuelCapacity = fuelCapacity;
+	}
+
+	/**
+	 * @return the cargoVolume
+	 */
+	public BigInteger getCargoVolume() {
+		return cargoVolume;
+	}
+
+	/**
+	 * @param cargoVolume the cargoVolume to set
+	 */
+	public void setCargoVolume(BigInteger cargoVolume) {
+		this.cargoVolume = cargoVolume;
+	}
+
+	/**
+	 * @return the salesPrice
+	 */
+	public double getSalesPrice() {
+		return salesPrice;
+	}
+
+	/**
+	 * @param salesPrice the salesPrice to set
+	 */
+	public void setSalesPrice(double salesPrice) {
+		this.salesPrice = salesPrice;
+	}
+
+	/**
+	 * @return the modelMaster
+	 */
+	public ModelMaster getModelMaster() {
+		return modelMaster;
+	}
+
+	/**
+	 * @param modelMaster the modelMaster to set
+	 */
+	public void setModelMaster(ModelMaster modelMaster) {
+		this.modelMaster = modelMaster;
+	}
+
+	/**
+	 * @return the vehicleImages
+	 */
+	public MultipartFile[] getVehicleImages() {
+		return vehicleImages;
+	}
+
+	/**
+	 * @param vehicleImages the vehicleImages to set
+	 */
+	public void setVehicleImages(MultipartFile[] vehicleImages) {
+		this.vehicleImages = vehicleImages;
+	}
+
+	/**
+	 * @return the vehicleImagesPath
+	 */
+	public String[] getVehicleImagesPath() {
+		return vehicleImagesPath;
+	}
+
+	/**
+	 * @param vehicleImagesPath the vehicleImagesPath to set
+	 */
+	public void setVehicleImagesPath(String[] vehicleImagesPath) {
+		this.vehicleImagesPath = vehicleImagesPath;
+	}
+	
+	
+}

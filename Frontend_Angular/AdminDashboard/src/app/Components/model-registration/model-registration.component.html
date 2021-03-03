@@ -1,0 +1,97 @@
+<div class="main-container">
+  <div class="form-heading">
+    <h1>Register Model</h1>
+  </div>
+  <div class=" p-4">
+    <div class="container text-center">
+      <alert></alert>
+    </div>
+  </div>
+  <div class="main-wrappxper" fxLayout="row" fxLayoutAlign="start">
+    <form [formGroup]="modelForm" class="example-form">
+      <div class="example-container" fxLayoutGap="32px">
+        <mat-form-field appearance="fill" [style.width.px]="327">
+          <mat-label>Brand</mat-label>
+          <mat-select formControlName="brandId" [ngModel] ="brandId">
+            <mat-option *ngFor="let brand of brands" [value]="brand.id">
+              {{ brand.name }}
+            </mat-option>
+          </mat-select>
+          <mat-hint align="end">Select brand.</mat-hint>
+          <mat-error *ngIf="hasError('brandId', 'required')"
+            >Brand is required</mat-error
+          >
+        </mat-form-field>
+        <mat-form-field appearance="fill" [style.width.px]="327">
+          <mat-label>Enter Model</mat-label>
+          <input
+            matInput
+            placeholder="Model Name"
+            formControlName="name"
+            [(ngModel)]="model.name"
+          />
+          <mat-hint align="end">Not more then 30 characters long.</mat-hint>
+          <mat-error *ngIf="hasError('name', 'required')"
+            >Name is required</mat-error
+          >
+          <mat-error *ngIf="hasError('name', 'maxlength')"
+            >You have more than 30 characters</mat-error
+          >
+        </mat-form-field>
+      </div>
+      <div class="example-container" fxLayoutGap="32px">
+        <mat-form-field appearance="fill" [style.width.px]="327">
+          <mat-label>About Model</mat-label>
+          <textarea
+            matInput
+            formControlName="shortDiscription"
+            [(ngModel)]="model.shortDiscription"
+          ></textarea>
+          <mat-hint align="end">Not more then 260 characters long.</mat-hint>
+
+          <mat-error *ngIf="hasError('shortDiscription', 'required')"
+            >Address is required</mat-error
+          >
+          <mat-error *ngIf="hasError('shortDiscription', 'maxlength')"
+            >You have more than 260 characters</mat-error
+          >
+        </mat-form-field>
+        <mat-form-field appearance="fill" [style.width.px]="327">
+          <mat-label>Model Year</mat-label>
+          <input
+            matInput
+            placeholder="Model Year"
+            formControlName="modelYear"
+            [(ngModel)]="model.modelYear"
+          />
+          <mat-error *ngIf="hasError('modelYear', 'required')"
+            >Model Year is required</mat-error
+          >
+          <mat-error *ngIf="hasError('modelYear', 'inValidModelYear')"
+            >Invalid Year</mat-error
+          >
+        </mat-form-field>
+        <div fxLayout="row" fxLayoutAlign="space-evenly center" class="mt-5">
+          <button
+            *ngIf="!id"
+            mat-stroked-button
+            color="primary"
+            class="btn-block"
+            (click)="onSubmit()"
+          >
+            Add Model
+          </button>
+          <button
+            *ngIf="id"
+            mat-stroked-button
+            color="accent"
+            class="btn-block"
+            (click)="onUpdate()"
+          >
+            Update
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,76 @@
+/**
+ * 
+ */
+package com.gateway.traineeproject.service;
+
+import java.util.List;
+import java.util.Optional;
+
+import javax.persistence.EntityExistsException;
+import javax.persistence.EntityNotFoundException;
+
+import org.hibernate.exception.ConstraintViolationException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.gateway.traineeproject.model.VehicleMaster;
+import com.gateway.traineeproject.repository.VehicleRepository;
+
+/**
+ * @author Hiren Khatri
+ *
+ */
+@Service
+public class VehicleMasterService {
+	
+	@Autowired
+	private VehicleRepository vehicleRepository;
+	
+	public List<VehicleMaster> findAll(){
+		return vehicleRepository.findAll();
+	}
+	
+	public Optional<VehicleMaster> findById(Long id) {
+		return vehicleRepository.findById(id);
+	}
+	
+	public VehicleMaster save(VehicleMaster vehicleToBeSaved) {
+		if(vehicleRepository.existsById(vehicleToBeSaved.getId())) {
+			throw new EntityExistsException("There is already existing entity with such ID in the database.");
+		}
+		if (vehicleRepository.existsByVINNum(vehicleToBeSaved.getvINNum())
+				) {
+			throw new ConstraintViolationException("There is already existing entity with same VIN number in the database.",
+					null, null);
+		}
+		if (vehicleRepository.existsByLicencePlate(vehicleToBeSaved.getLicencePlate())
+				) {
+			throw new ConstraintViolationException("There is already existing entity with same Licence Plate  in the database.",
+					null, null);
+		}
+	
+		return vehicleRepository.save(vehicleToBeSaved);
+	}
+	
+	public VehicleMaster update(VehicleMaster vehicleToBeUpdated) {
+		if(!vehicleRepository.existsById(vehicleToBeUpdated.getId())) {
+			throw new EntityNotFoundException("There is no existing entity with such ID in the database.");
+		}
+		if(vehicleRepository.existsByVINNum(vehicleToBeUpdated.getvINNum()) && 
+				vehicleRepository.existsByVINNumAndId(vehicleToBeUpdated.getvINNum(), vehicleToBeUpdated.getId())) {
+			throw new EntityExistsException("There is already existing entity with same VIN number in the database.");
+		}
+		if(vehicleRepository.existsByLicencePlate(vehicleToBeUpdated.getLicencePlate()) && 
+				vehicleRepository.existsByLicencePlateAndId(vehicleToBeUpdated.getLicencePlate(), vehicleToBeUpdated.getId())) {
+			throw new EntityExistsException("There is already existing entity with same Licence plate number in the database.");
+		}
+		return vehicleRepository.save(vehicleToBeUpdated);
+	}
+	
+	public void delete(Long id) {
+		if(!vehicleRepository.existsById(id)) {
+			throw new EntityNotFoundException("There is no existing entity with such ID in the database.");
+		}
+		vehicleRepository.deleteById(id);
+	}
+}

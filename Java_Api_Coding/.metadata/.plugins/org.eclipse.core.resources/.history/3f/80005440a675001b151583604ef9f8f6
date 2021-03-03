@@ -1,0 +1,12 @@
+/**
+ * 
+ */
+package com.gateway.traineeproject.helper;
+
+/**
+ * @author Hiren Khatri
+ *
+ */
+public class FileUploadHelper {
+
+}

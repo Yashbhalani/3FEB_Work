@@ -1,0 +1,349 @@
+<div class="main-container">
+  <div class="form-heading">
+    <h1>Vehicle Registration</h1>
+  </div>
+  <div class=" p-4 stickPosition">
+    <div class="container text-center">
+      <alert></alert>
+    </div>
+  </div>
+  <div class="main-wrappxper" fxLayout="row" fxLayoutAlign="start">
+    <form [formGroup]="registerForm" class="example-form" >
+      <div class="example-container" fxLayoutGap="32px">
+
+        <mat-form-field appearance="fill" [style.width.px]="327">
+          <mat-label>Brand</mat-label>
+          <mat-select formControlName="brandId" [(ngModel)]="brandId" (selectionChange)="loadModel($event.value)">
+            <mat-option *ngFor="let brand of brands" [value]="brand.id">
+              {{ brand.name }}
+            </mat-option>
+          </mat-select>
+          <mat-hint align="end">Select brand.</mat-hint>
+          <mat-error *ngIf="hasError('brandId', 'required')"
+            >Brand is required</mat-error
+          >
+        </mat-form-field>
+        <mat-form-field appearance="fill" [style.width.px]="327">
+          <mat-label>Model</mat-label>
+          <mat-select formControlName="modelId" [(ngModel)]="modelId">
+            <mat-option *ngFor="let model of models" [value]="model.id">
+              {{ model.name }} - {{model.modelYear}}
+            </mat-option>
+          </mat-select>
+          <mat-hint align="end">Select model.</mat-hint>
+          <mat-error *ngIf="hasError('modelId', 'required')"
+            >Model is required</mat-error
+          >
+        </mat-form-field>
+      </div>
+
+      <div class="example-container" fxLayoutGap="32px">
+        <mat-form-field appearance="fill" [style.width.px]="327">
+          <mat-label>Enter VIN Number</mat-label>
+          <input
+            matInput
+            placeholder="VIN Number"
+            formControlName="vINNum"
+            [(ngModel)]="vehicle.vINNum"
+          />
+          <mat-hint align="end">17 characters long.</mat-hint>
+          <mat-error *ngIf="hasError('vINNum', 'required')"
+            >VIN number is required</mat-error
+          >
+          <mat-error *ngIf="hasError('vINNum', 'inValidvINNum')"
+          >Invalid VIN number!Should be 17 character long</mat-error
+        >
+        </mat-form-field>
+      </div>
+
+      <div class="example-container" fxLayoutGap="32px">
+        <mat-form-field appearance="fill" [style.width.px]="327">
+          <mat-label>Enter Licence Plate Number</mat-label>
+          <input
+            matInput
+            placeholder="Licence Plate Number"
+            formControlName="licencePlate"
+            [(ngModel)]="vehicle.licencePlate"
+          />
+          <mat-hint align="end">12 characters long.</mat-hint>
+          <mat-error *ngIf="hasError('licencePlate', 'required')"
+          >Licence Plate Number is required</mat-error
+          >
+          <mat-error *ngIf="hasError('licencePlate', 'inValidlicencePlate')"
+          >Invalid VIN number!Should be like AX 00 BX 0000</mat-error
+        >
+        </mat-form-field>
+        <mat-form-field appearance="fill" [style.width.px]="327">
+          <mat-label>Enter Average Usage</mat-label>
+          <input
+            matInput
+            placeholder="Average Usage"
+            formControlName="averageUsage"
+            [(ngModel)]="vehicle.averageUsage"
+          />
+          <mat-hint align="end">required*</mat-hint>
+          <mat-error *ngIf="hasError('averageUsage', 'required')"
+          >Average Usage is required</mat-error
+          >
+        </mat-form-field>
+      </div>
+
+      <div class="example-container" fxLayoutGap="32px">
+        <mat-form-field appearance="fill" [style.width.px]="327">
+          <mat-label>Kilometers</mat-label>
+          <input
+            matInput
+            placeholder="Kilometers"
+            formControlName="kilometers"
+            [(ngModel)]="vehicle.kilometers"
+          />
+           <mat-hint align="end">required*</mat-hint>
+          <mat-error *ngIf="hasError('kilometers', 'required')"
+          > Kilometers is required</mat-error
+          >
+          <mat-error *ngIf="hasError('kilometers', 'pattern')"
+          > Only numbers</mat-error
+          >
+        </mat-form-field>
+        <mat-form-field appearance="fill" [style.width.px]="327">
+          <mat-label>Seating Capacity</mat-label>
+          <!-- <mat-select
+            formControlName="seatingCapacity"
+            [(ngModel)]="seatingCapicity1"
+          >
+            <mat-option value="2">2</mat-option>
+            <mat-option value="4">4</mat-option>
+            <mat-option value="5">5</mat-option>
+            <mat-option value="7">7</mat-option>
+            <mat-option value="8">8</mat-option>
+          </mat-select> -->
+          <input
+          matInput
+          placeholder="Seating Capacity"
+          formControlName="seatingCapacity"
+          [(ngModel)]="vehicle.seatingCapicity"
+        />
+           <mat-hint align="end">required*</mat-hint>
+          <mat-error *ngIf="hasError('seatingCapacity', 'required')"
+          >Seating Capacity is required</mat-error
+          >
+          <mat-error *ngIf="hasError('seatingCapacity', 'pattern')"
+          >Only numbers</mat-error
+          >
+        </mat-form-field>
+      </div>
+
+      <div class="example-container" fxLayoutGap="32px">
+        <mat-form-field appearance="fill" [style.width.px]="327">
+          <mat-label>Engine</mat-label>
+          <textarea
+            matInput
+            formControlName="engine"
+            [(ngModel)]="vehicle.engine"
+          ></textarea>
+           <mat-hint align="end">required*</mat-hint>
+          <mat-error *ngIf="hasError('engine', 'required')"
+          >Engine is required</mat-error
+          >
+        </mat-form-field>
+        <mat-form-field appearance="fill" [style.width.px]="327">
+          <mat-label>Body Type</mat-label>
+          <input
+            matInput
+            placeholder="Bodytype"
+            formControlName="bodyType"
+            [(ngModel)]="vehicle.bodyType"
+          />
+           <mat-hint align="end">required*</mat-hint>
+          <mat-error *ngIf="hasError('bodyType', 'required')"
+          >Body Type is required</mat-error
+          >
+        </mat-form-field>
+      </div>
+
+      <div class="example-container" fxLayoutGap="32px">
+        <mat-form-field appearance="fill" [style.width.px]="327">
+          <mat-label>Fuel Type</mat-label>
+          <!-- <input
+            matInput
+            placeholder="Fuel Type"
+            formControlName="fuelType"
+            [(ngModel)]="vehicle.fuelType"
+          /> -->
+          <mat-select
+          formControlName="fuelType"
+          [(ngModel)]="vehicle.fuelType"
+        >
+          <mat-option value="Petrol">Petrol</mat-option>
+          <mat-option value="Diesel">Diesel</mat-option>
+        </mat-select>
+           <mat-hint align="end">required*</mat-hint>
+          <mat-error *ngIf="hasError('fuelType', 'required')"
+          >Fuel Type is required</mat-error
+          >
+        </mat-form-field>
+        <mat-form-field appearance="fill" [style.width.px]="327">
+          <mat-label>Number Of Airbags</mat-label>
+          <input
+            matInput
+            placeholder="Number Of Airbags"
+            formControlName="numOfAirbags"
+            [(ngModel)]="vehicle.numOfAirbags"
+          />
+           <mat-hint align="end">required*</mat-hint>
+          <mat-error *ngIf="hasError('numOfAirbags', 'required')"
+          >Number Of Airbags is required</mat-error
+          >
+          <mat-error *ngIf="hasError('numOfAirbags', 'pattern')"
+          >Only numbers</mat-error
+          >
+        </mat-form-field>
+      </div>
+
+      <div class="example-container" fxLayoutGap="32px">
+        <mat-form-field appearance="fill" [style.width.px]="327">
+          <mat-label>Number Of Doors</mat-label>
+          <input
+            matInput
+            placeholder="Number Of Doors"
+            formControlName="numOfDoors"
+            [(ngModel)]="vehicle.numOfDoors"
+          />
+          <!-- <mat-select
+          formControlName="numOfDoors"
+          [(ngModel)]="vehicle.numOfDoors"
+        >
+          <mat-option value="2">2</mat-option>
+          <mat-option value="4">4</mat-option>
+          <mat-option value="6">6</mat-option> -->
+        <!-- </mat-select> -->
+           <mat-hint align="end">required*</mat-hint>
+          <mat-error *ngIf="hasError('numOfDoors', 'required')"
+          >Number Of Door is required</mat-error
+          >
+          <mat-error *ngIf="hasError('numOfDoors', 'pattern')"
+          >Only numbers</mat-error
+          >
+        </mat-form-field>
+        <mat-form-field appearance="fill" [style.width.px]="327">
+          <mat-label>Vehicle Configuration</mat-label>
+          <textarea
+            matInput
+            formControlName="vehicleConfiguration"
+            [(ngModel)]="vehicle.vehicleConfiguration"
+          ></textarea>
+           <mat-hint align="end">required*</mat-hint>
+          <mat-error *ngIf="hasError('vehicleConfiguration', 'required')"
+          >Vehicle Configuration is required</mat-error
+          >
+        </mat-form-field>
+      </div>
+
+      <div class="example-container" fxLayoutGap="32px">
+        <mat-form-field appearance="fill" [style.width.px]="327">
+          <mat-label>Wheelbase</mat-label>
+          <input
+            matInput
+            placeholder="Wheelbase"
+            formControlName="wheelbase"
+            [(ngModel)]="vehicle.wheelbase"
+          />
+           <mat-hint align="end">required*</mat-hint>
+          <mat-error *ngIf="hasError('wheelbase', 'required')"
+          >Wheelbase is required</mat-error
+          >
+        </mat-form-field>
+        <mat-form-field appearance="fill" [style.width.px]="327">
+          <mat-label>Color</mat-label>
+          <input
+            matInput
+            placeholder="Color"
+            formControlName="color"
+            [(ngModel)]="vehicle.color"
+          />
+           <mat-hint align="end">required*</mat-hint>
+          <mat-error *ngIf="hasError('color', 'required')"
+          >Color is required</mat-error
+          >
+        </mat-form-field>
+      </div>
+
+      <div class="example-container" fxLayoutGap="32px">
+        <mat-form-field appearance="fill" [style.width.px]="327">
+          <mat-label>Fuel Capacity</mat-label>
+          <input
+            matInput
+            placeholder="Fuel Capacity"
+            formControlName="fuelCapacity"
+            [(ngModel)]="vehicle.fuelCapacity"
+          />
+           <mat-hint align="end">required*</mat-hint>
+          <mat-error *ngIf="hasError('fuelCapacity', 'required')"
+          >Fuel Capacity is required</mat-error
+          >
+          <mat-error *ngIf="hasError('fuelCapacity', 'pattern')"
+          >Only numbers</mat-error
+          >
+        </mat-form-field>
+        <mat-form-field appearance="fill" [style.width.px]="327">
+          <mat-label>Cargo Volume</mat-label>
+          <input
+            matInput
+            placeholder="Cargo Volume"
+            formControlName="cargoVolume"
+            [(ngModel)]="vehicle.cargoVolume"
+          />
+           <mat-hint align="end">required*</mat-hint>
+          <mat-error *ngIf="hasError('cargoVolume', 'required')"
+          >Cargo Volume is required</mat-error
+          >
+          <mat-error *ngIf="hasError('cargoVolume', 'pattern')"
+          >Only numbers</mat-error
+          >
+        </mat-form-field>
+      </div>
+
+      <div class="example-container" fxLayoutGap="32px">
+        <mat-form-field appearance="fill" [style.width.px]="327">
+          <mat-label>Sales Price</mat-label>
+          <input
+            matInput
+            type="number"
+            class="example-right-align"
+            formControlName="salesPrice"
+            [(ngModel)]="vehicle.salesPrice"
+          />
+          <span matPrefix>$&nbsp;</span>
+          <span matSuffix>.00</span>
+           <mat-hint align="end">required*</mat-hint>
+          <mat-error *ngIf="hasError('salesPrice', 'required')"
+          >SalesPricee is required</mat-error
+          >
+          <mat-error *ngIf="hasError('salesPrice', 'pattern')"
+          >Only numbers</mat-error
+          >
+        </mat-form-field>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="space-evenly center" class="mt-5">
+        <button
+        *ngIf="!id"
+        mat-stroked-button
+          color="primary"
+          class="btn-block"
+          (click)="onSubmit()"
+        >
+          Add Brand
+        </button>
+        <button
+        *ngIf="id"
+        mat-stroked-button
+          color="accent"
+          class="btn-block"
+          (click)="onUpdate()"
+        >
+          Update
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

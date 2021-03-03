@@ -1,0 +1,21 @@
+/**
+ * 
+ */
+package com.gateway.traineeproject.controller;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+/**
+ * @author Hiren Khatri
+ *
+ */
+@RestController
+public class FileUploaderController {
+	
+	@PostMapping("/upload-file")
+	public ResponseEntity<String> uploadFile(){
+		return ResponseEntity.ok("");
+	}
+}

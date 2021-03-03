@@ -1,0 +1,13 @@
+package com.gateway.traineeproject.repository;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.gateway.traineeproject.model.ModelMaster;
+
+/**
+ * @author Hiren Khatri
+ *
+ */
+public interface ModelRepository extends JpaRepository<ModelMaster, Long>{
+	public boolean existsByBrandId(Long brandId);
+}

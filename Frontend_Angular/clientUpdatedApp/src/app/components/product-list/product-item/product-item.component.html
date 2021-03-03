@@ -1,0 +1,22 @@
+<div class="card mb-4 shadow-sm">
+    <img class="bd-placeholder-img card-img-top" width="100%"
+        src="https://th.bing.com/th/id/OIP.YjhJ70U8l0LflqNh3hIfPQHaE7?pid=ImgDet&w=178&h=118&c=7&dpr=1.5">
+    <div class="card-body">
+        <p class="card-text">
+            <strong>
+                {{ vehicleItem.salesPrice | currency }}
+            </strong>
+        </p>
+        <p class="card-text">{{ vehicleItem.modelMaster.name | titlecase }}</p>
+        <div class="d-flex justify-content-between align-items-center">
+            <div class="btn-group">
+                <button class="btn btn-outline-primary btn-block stretched-link" type="button" (click)="routeToVehicle(vehicleItem.id)">
+                    <span class="btn-text">
+                        <p style="vertical-align: inherit;">Check out this car</p>
+                    </span>
+                </button>
+
+            </div>
+        </div>
+    </div>
+</div>

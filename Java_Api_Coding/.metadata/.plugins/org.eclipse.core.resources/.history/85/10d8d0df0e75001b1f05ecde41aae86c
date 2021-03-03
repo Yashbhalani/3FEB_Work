@@ -1,0 +1,12 @@
+/**
+ * 
+ */
+package com.gateway.traineeproject.model;
+
+/**
+ * @author Hiren Khatri
+ *
+ */
+public class Media {
+
+}

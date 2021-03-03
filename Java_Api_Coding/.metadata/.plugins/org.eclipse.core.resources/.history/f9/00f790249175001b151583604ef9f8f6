@@ -1,0 +1,56 @@
+/**
+ * 
+ */
+package com.gateway.traineeproject.service;
+
+import java.util.List;
+import java.util.Optional;
+
+import javax.persistence.EntityExistsException;
+import javax.persistence.EntityNotFoundException;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.gateway.traineeproject.model.ModelMaster;
+import com.gateway.traineeproject.repository.ModelRepository;
+
+/**
+ * @author Hiren Khatri
+ *
+ */
+@Service
+public class ModelMasterService {
+	@Autowired
+	private ModelRepository modelRepository;
+	
+	
+	public List<ModelMaster> findAll() {
+		return modelRepository.findAll();
+	}
+	
+	public Optional<ModelMaster> findById(Long id) {
+		return modelRepository.findById(id);
+	}
+	
+	public ModelMaster save(ModelMaster modelToBeSaved) {
+		if(Long.valueOf(modelToBeSaved.getId()) != null && modelRepository.existsById(modelToBeSaved.getId())) {
+			throw new EntityExistsException("There is already existing entity with such ID in the database.");
+		}
+		return modelRepository.save(modelToBeSaved);
+	}
+	
+	public ModelMaster update(ModelMaster modelToBeUpdated) {
+		if(!modelRepository.existsById(modelToBeUpdated.getId())) {
+			throw new EntityNotFoundException("There is no existing entity with such ID in the database.");
+		}
+		return modelRepository.save(modelToBeUpdated);
+	}
+	
+	public void delete(Long id) {
+		if(!modelRepository.existsById(id)) {
+			throw new EntityNotFoundException("There is no existing entity with such ID in the database.");
+		}
+		modelRepository.deleteById(id);
+	}
+}

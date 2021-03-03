@@ -1,0 +1,71 @@
+package com.gateway.traineeproject.service;
+
+import java.util.List;
+import java.util.Optional;
+
+import javax.persistence.EntityExistsException;
+import javax.persistence.EntityNotFoundException;
+
+import org.hibernate.exception.ConstraintViolationException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.gateway.traineeproject.model.Quote;
+import com.gateway.traineeproject.repository.QuoteRepository;
+
+/**
+ * @author hiren.khatri
+ *
+ */
+@Service
+public class QuoteService {
+
+	@Autowired
+	private QuoteRepository quoteRepository;
+
+	
+	public List<Quote> findAll(){
+		return quoteRepository.findAll();
+	}
+	
+	public Optional<Quote> findById(long id){
+		if (!quoteRepository.existsById(id)) {
+			throw new EntityExistsException("The Quote is already stored in database!");
+		}
+		return quoteRepository.findById(id);
+	}
+	
+	public Quote create(Quote quoteToBeSaved) {
+		if (quoteRepository.existsById(quoteToBeSaved.getId())) {
+			throw new EntityExistsException("The Quote is already stored in database!");
+		}
+
+		if (quoteRepository.existsByVehicleIdAndCustomerId(quoteToBeSaved.getVehicleId(),
+				quoteToBeSaved.getCustomerId())) {
+			throw new ConstraintViolationException("You have alredy applied lease for this vehicle.", null, null);
+		}
+		return quoteRepository.save(quoteToBeSaved);
+	}
+
+	public Quote update(Quote quoteToBeUpdated) {
+		if (!quoteRepository.existsById(quoteToBeUpdated.getId())) {
+			throw new EntityNotFoundException("No Quote is stored with this id!");
+		}
+		return quoteRepository.save(quoteToBeUpdated);
+	}
+
+	public Quote delete(long id) {
+		if (!quoteRepository.existsById(id)) {
+			throw new EntityNotFoundException("No Quote is stored with this id!");
+		}
+
+		Optional<Quote> quote = quoteRepository.findById(id);
+		if (!quote.isPresent()) {
+			throw new EntityNotFoundException("No Quote is stored with this id!");
+		}
+		quote.get().setStatus("Rejected");
+
+		quoteRepository.save(quote.get());
+		return quote.get();
+	}
+}

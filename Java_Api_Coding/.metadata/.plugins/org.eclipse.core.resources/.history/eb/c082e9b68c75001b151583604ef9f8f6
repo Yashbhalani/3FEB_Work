@@ -1,0 +1,33 @@
+/**
+ * 
+ */
+package com.gateway.traineeproject.service;
+
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.gateway.traineeproject.helper.FileStorageProperties;
+
+/**
+ * @author Hiren Khatri
+ *
+ */
+public class ImageStorageService {
+
+	 private final Path fileStorageLocation;
+	 
+	 @Autowired
+	    public ImageStorageService(FileStorageProperties fileStorageProperties) throws Exception {
+	        this.fileStorageLocation = Paths.get(fileStorageProperties.getUploadDir())
+	                .toAbsolutePath().normalize();
+
+	        try {
+	            Files.createDirectories(this.fileStorageLocation);
+	        } catch (Exception ex) {
+	            throw new Exception("Could not create the directory where the uploaded files will be stored.", ex);
+	        }
+	 }
+}

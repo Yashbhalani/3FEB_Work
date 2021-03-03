@@ -1,0 +1,125 @@
+/**
+ * 
+ */
+package com.gateway.traineeproject.controller;
+
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+import javax.persistence.EntityExistsException;
+import javax.persistence.EntityNotFoundException;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import com.gateway.traineeproject.model.Brand;
+import com.gateway.traineeproject.model.Media;
+import com.gateway.traineeproject.model.ModelMaster;
+import com.gateway.traineeproject.model.VehicleMaster;
+import com.gateway.traineeproject.service.ModelMasterService;
+import com.gateway.traineeproject.service.VehicleMasterService;
+
+import javassist.NotFoundException;
+
+/**
+ * @author Hiren Khatri
+ *
+ */
+@RestController
+@CrossOrigin(origins = "*")
+public class VehicleMasterController {
+
+	@Autowired
+	private VehicleMasterService vehicleMasterService;
+
+	@GetMapping("/api/vehicles")
+	public List<VehicleMaster> getAllVehicles() {
+		System.out.println(ServletUriComponentsBuilder.fromCurrentContextPath().path("/resources").toUriString());
+		return vehicleMasterService.findAll();
+	}
+
+	@GetMapping("/api/vehicles/{id}")
+	public ResponseEntity<VehicleMaster> getVehicle(@PathVariable Long id) throws NotFoundException {
+		Optional<VehicleMaster> foundBrand = vehicleMasterService.findById(id);
+
+		if (!foundBrand.isPresent()) {
+			throw new NotFoundException("Brand not found with id: " + id);
+		}
+
+		VehicleMaster vehicle = foundBrand.get();
+
+		return ResponseEntity.ok(vehicle);
+	}
+
+	@RequestMapping(value = "/api/vehicles", method = RequestMethod.POST)
+	public ResponseEntity<VehicleMaster> createModel(@RequestBody VehicleMaster vehicleToBeSaved)
+			throws URISyntaxException {
+		try {
+			
+			Brand brand = new Brand();
+			brand.setId(vehicleToBeSaved.getBrandId());
+			
+			ModelMaster modelMaster = new ModelMaster();
+			modelMaster.setId(vehicleToBeSaved.getModelId());
+			modelMaster.setBrand(brand);
+			
+			vehicleToBeSaved.setModelMaster(modelMaster);
+			
+			VehicleMaster vehicle = vehicleMasterService.save(vehicleToBeSaved);
+			return ResponseEntity.created(new URI("/api/models/" + vehicle.getId())).body(vehicle);
+		} catch (EntityExistsException e) {
+			return new ResponseEntity<VehicleMaster>(HttpStatus.CONFLICT);
+		}
+	}
+
+	@RequestMapping(value = "/api/vehicles", method = RequestMethod.PUT)
+	public ResponseEntity<VehicleMaster> updateModel(@RequestBody VehicleMaster vehicleToBeUpdated)
+			throws URISyntaxException {
+		try {
+			VehicleMaster vehicle = vehicleMasterService.update(vehicleToBeUpdated);
+			return ResponseEntity.created(new URI("/api/models/" + vehicle.getId())).body(vehicle);
+		} catch (EntityNotFoundException e) {
+			return new ResponseEntity<VehicleMaster>(HttpStatus.CONFLICT);
+		}
+	}
+
+	@RequestMapping(value = "/api/vehicles/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity<Void> deleteModel(@PathVariable Long id) throws NotFoundException {
+		try {
+			vehicleMasterService.delete(id);
+			return ResponseEntity.ok().build();
+		} catch (EntityNotFoundException e) {
+			return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+		}
+	}
+	
+//	private List<Media> saveImages(MultipartFile[] vehicleImages,long vehicleId){
+//		
+//		List<Media> medias = new ArrayList<Media>();
+//		
+//		for (MultipartFile multipartFile : vehicleImages) {
+//			String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+//			
+//			String uploadDir = "/Images/"+vehicleId +"/";
+//			
+////			FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
+//		}
+//		
+//		return medias;
+//	}
+}

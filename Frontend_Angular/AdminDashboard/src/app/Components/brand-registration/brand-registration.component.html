@@ -1,0 +1,85 @@
+<div class="main-container">
+  <div class="form-heading">
+    <h1>Register Brand</h1>
+  </div>
+    <div class=" p-4">
+      <div class="container text-center">
+        <alert></alert>
+      </div>
+    </div>
+  <div
+    class="main-wrappxper"
+    fxLayout="column wrap"
+    fxLayoutAlign="center center"
+    fxLayoutGap="10px"
+  >
+
+    <form
+      [formGroup]="brandForm"
+      autocomplete="off"
+      novalidate
+      class="example-form"
+    >
+      <div class="example-container" fxLayoutGap="32px">
+        <mat-form-field appearance="fill" [style.width.px]="327">
+          <mat-label>Enter Brand Name</mat-label>
+          <input
+            matInput
+            placeholder="Brand Name"
+            id="name"
+            [(ngModel)]="brand.name"
+            formControlName="name"
+          />
+          <mat-hint align="end">Not more then 30 characters long.</mat-hint>
+          <mat-error *ngIf="hasError('name', 'required')"
+            >Name is required</mat-error
+          >
+          <mat-error *ngIf="hasError('name', 'maxlength')"
+            >You have more than 30 characters</mat-error
+          >
+        </mat-form-field>
+        <mat-form-field appearance="fill" [style.width.px]="327">
+          <mat-label>About Brand</mat-label>
+          <textarea
+            matInput
+            id="about"
+            [(ngModel)]="brand.shortDiscription"
+            formControlName="shortDiscription"
+          ></textarea>
+          <mat-hint align="end">Not more then 260 characters long.</mat-hint>
+
+          <mat-error *ngIf="hasError('shortDiscription', 'required')"
+            >Address is required</mat-error
+          >
+          <mat-error *ngIf="hasError('shortDiscription', 'maxlength')"
+            >You have more than 260 characters</mat-error
+          >
+        </mat-form-field>
+        <mat-card-actions
+          fxLayout="column"
+          fxLayoutAlign="space-evenly center"
+          class="mt-5"
+        >
+          <button
+            *ngIf="!id"
+            mat-stroked-button
+            color="primary"
+            class="btn-block"
+            (click)="onSubmit()"
+          >
+            Add Brand
+          </button>
+          <button
+            *ngIf="id"
+            mat-stroked-button
+            color="accent"
+            class="btn-block"
+            (click)="onUpdate()"
+          >
+            Update
+          </button>
+        </mat-card-actions>
+      </div>
+    </form>
+  </div>
+</div>

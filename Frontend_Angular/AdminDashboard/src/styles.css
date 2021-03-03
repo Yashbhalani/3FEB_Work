@@ -1,0 +1,38 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+textarea{
+    min-height: 100px;
+}
+
+.stickPosition{
+    position: sticky;
+    top: 45px;
+  }
+
+  .app-toolbar {
+    position: sticky;
+    position: -webkit-sticky; /* For macOS/iOS Safari */
+    top: 0; /* Sets the sticky toolbar to be on top */
+    z-index: 1000; /* Ensure that your app's content doesn't overlap the toolbar */
+}
+
+
+table {
+  width: 100%;
+}
+
+mat-form-field {
+  font-size: 14px;
+  width: 25%;
+}
+
+mat-paginator {
+  width: 50%;
+}
+
+td, th {
+  width: auto;
+}

@@ -1,0 +1,17 @@
+/**
+ * 
+ */
+package com.gateway.traineeproject.controller;
+
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RestController;
+
+/**
+ * @author Hiren Khatri
+ *
+ */
+@RestController
+@CrossOrigin(origins = "*")
+public class MediaController {
+
+}

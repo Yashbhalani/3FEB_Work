@@ -1,0 +1,68 @@
+package com.gateway.traineeproject.model;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+/**
+ * @author Hiren Khatri
+ *
+ */
+@Entity
+@Table(name="Brand")
+public class Brand
+{
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long id;
+	@Column(name="Name")
+	private String name;
+	@Column(name="ShortDiscription")
+	private String shortDiscription;
+	/**
+	 * @return the id
+	 */
+	public long getId() {
+		return id;
+	}
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(long id) {
+		this.id = id;
+	}
+	/**
+	 * @return the name
+	 */
+	public String getName() {
+		return name;
+	}
+	/**
+	 * @param name the name to set
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
+	/**
+	 * @return the shortDiscription
+	 */
+	public String getShortDiscription() {
+		return shortDiscription;
+	}
+	/**
+	 * @param shortDiscription the shortDiscription to set
+	 */
+	public void setShortDiscription(String shortDiscription) {
+		this.shortDiscription = shortDiscription;
+	}
+	@Override
+	public String toString() {
+		return "Brand [id=" + id + ", name=" + name + ", shortDiscription=" + shortDiscription + "]";
+	}
+	
+	
+	
+}
